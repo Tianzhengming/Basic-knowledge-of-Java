@@ -21,25 +21,26 @@
   java反射机制中获取Class对象的三种方式：  
   如果想要对一个类文件进行解剖，必须要有字节码文件对象，任何数据类型都具备一个静态的属性。获取字节码文件对象的方式有以下三种：  
   方式一：
- '< 
+  ```
   public static void getClassObject1(){  
     Person p=new Person();  
     Class clazz=p.getClass();  
   }
-  >'
-  
-  缺点：想要用这种方式，必须要明确具体的类，并非创建对象。
+  ```
+  缺点：想要用这种方式，必须要明确具体的类，并非创建对象。  
   方式二：  
+  ```
   public static void getClassObject2(){
     Class clazz=Person.class;
   }
-  、、、
-  缺点：相对简单，但是还是要明确类名，不够扩展。  
+  ```
+  缺点：相对简单，但是还是要明确类名，不够扩展。    
   方式三：  
+  ```
   public static void getClassObject3(){
     String className="Person";//类名称一定要带包名
     Class clazz=Class.forName(className);
   }
-  、、、
+  ```
   
     
