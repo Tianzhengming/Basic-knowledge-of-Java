@@ -7,7 +7,6 @@
     4）java反射机制中获取Class中的构造函数；
     5）java反射机制中获取Class中的字段；
     6）java反射机制中获取Class中的方法；
-    7）java反射机制的练习。
     
   #### java反射机制的概述与应用场景：  
   概述：java的放射机制是在运行状态中对于任意一个类都能知道这个类的属性跟方法；对于任意一个对象都能调用他的任意一个方法和属性；这种动态获取的信息及    动态调用对象的方法的功能称为java语言的反射机制。通俗点讲：就是动态获取类中的信息，就是java的反射，可以理解为对类的解剖。  
@@ -83,4 +82,31 @@
     field.set(obj,22);
   }
   ```
-  
+  #### java反射机制中获取Class中的方法
+  ```
+  public static void getFieldDemo()throws Exception{
+    Class clazz=Class.forName("cn.itcast.bean.Person");
+    Method[] methods=clazz.getMethods();//获取的都是公有的方法
+    methods=clazz.getDeclaredMethods();//只能获取本类中所有的方法，包含私有
+  }
+  ```
+  调用本类中无参数的方法：
+  ```
+  public static void getMethodDemo()throws Exception{
+    Class clazz=Class.forName("cn.itcast.bean.Person");
+    Method method =clazz.getMethod("show",null);//获取空参数的一般方法
+    Object obj=clazz.newInstance();
+    Constructor constructor=clazz.getConstructor(String.class,int.class)
+    Object obj=constructor.newInstance("小明",33);
+    method.invoke(obj,null);
+  }
+  ```
+  调用本类中有参数的方法：
+  ```
+  public static void getMethodDemo()throws Exception{
+    Class clazz=Class.forName("cn.itcast.bean.Person");
+    Method method =clazz.getMethod("paramMethod",String.class,int.class);//获取空参数的一般方法
+    Object obj=clazz.newInstance();
+    method.invoke(obj,"小强",44);
+  }
+  ```
