@@ -67,4 +67,20 @@
     Object obj=constructor,newInstance("小明"，22)；
   }
   ```
+  #### java反射机制中获取Class中的字段
+  ```
+  public static void getFieldDemo()throws Exception{
+    Class clazz=Class.forName("cn.itcast.bean.Person");
+    Field field=clazz.getField("age");//可以获取Class对象所表示的类或者接口的所有可以访问的公共字段
+    field=clazz.getDeclaredField("age");//只能获取本类中所有的字段，包括公共字段与私有字段
+    //对私有字段的访问取消权限检查
+    field.setAccessible(true);
+    /*
+    如果要调用该属性中的get方法，肯定需要具体对象
+    */
+    Object obj=clazz.newInstance();
+    Object age=field.get(obj);
+    field.set(obj,22);
+  }
+  ```
   
