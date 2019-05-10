@@ -105,7 +105,7 @@
   ```
   public static void getMethodDemo()throws Exception{
     Class clazz=Class.forName("cn.itcast.bean.Person");
-    Method method =clazz.getMethod("paramMethod",String.class,int.class);//获取空参数的一般方法
+    Method method =clazz.getMethod("paramMethod",String.class,int.class);//获取有参数的一般方法
     Object obj=clazz.newInstance();
     method.invoke(obj,"小强",44);
   }
