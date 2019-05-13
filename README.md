@@ -151,4 +151,55 @@ class BeanFactory{
 }
 ```
 此时，如果有新的实现类要添加进来，必须要修改BeanFactory中的源代码，这样就实现不了程序的解耦合问题。  
+## 3.JDK的动态代理
+### JDK动态代理底层原理伪代码实现
+伪代码分为三个步骤：
+1）创建代理对象
+2）代理对象中方法增强
+3）调用代理对象中被增强的方法
+```
+package java中的JDK动态代理;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+import dao.UserDao;
+
+public class JdkProxy implements InvocationHandler {
+	private UserDao userDao;
+
+	public JdkProxy(UserDao userDao) {
+		this.userDao = userDao;
+	}
+  
+	// 步骤一：创建代理对象
+	public UserDao createProxy() {
+		UserDao userDaoProxy = (UserDao) Proxy.newProxyInstance(userDao.getClass().getClassLoader(),
+				userDao.getClass().getInterfaces(), this);
+		return userDaoProxy;
+	}
+
+	@Override
+  //步骤二：方法增强
+	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+		// 判断方法名是不是save
+		if ("save".equals(method.getName())) {
+			System.out.println("權限校驗");
+			return method.invoke(userDao, args);
+		}
+		return method.invoke(userDao, args);
+	}
+}
+
+public class Main{
+  public static void main(String args[])
+  {
+    UserDao proxy=new JdkProxy(userDao).createProxy();
+    //步骤三：调用增强方法
+    proxy.save();
+  }
+}
+```
+
 
