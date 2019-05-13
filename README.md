@@ -110,3 +110,45 @@
     method.invoke(obj,"小强",44);
   }
   ```
+## 2.Spring中工程+java反射+配置文件的方式
+### 工厂+反射+配置文件 实现程序的解耦合  
+```
+<bean id="userDao" class="xxx.UserDaoImpl"></bean>
+class BeanFactory{
+  public static Object getBean(String id)
+  {
+    //解析XML文件
+    //反射
+    Class clazz=Class.forName();
+    return clazz.newInstance();
+  }
+}
+```
+在这样的方式中，如果新增一个UserDao的实现类UserDaoImpl2，此时不用修改任何源代码，只需要在配置文件中配置  
+```
+<bean id="userDao2" class="xxx.UserDaoImpl2"></bean>
+```
+然后在调用时直接调用
+```
+BeanFactory.getBean(userDao2);
+```
+为了便理解与普通的调用方式进行对比：
+### 普通的调用方式
+```
+class BeanFactory{
+  public static UserDao getUserDao()
+  {
+    return new UserDaoImpl();
+  }
+  public static UserDao getUserDao2()
+  {
+    return new UserDaoImpl2();
+  }
+  public static UserDao getUserDao3()
+  {
+    return new UserDaoImpl3();
+  }
+}
+```
+此时，如果有新的实现类要添加进来，必须要修改BeanFactory中的源代码，这样就实现不了程序的解耦合问题。
+
